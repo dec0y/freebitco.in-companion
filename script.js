@@ -113,7 +113,7 @@ function drawUI() {
   `
   const myDiv = document.createElement("div");
   myDiv.id = "SCRIPT_PANEL";
-  myDiv.style.cssText = `position:fixed;top:10vh;right:10px;z-index:1000;`;
+  myDiv.style.cssText = `position:fixed;top:10vh;right:16px;z-index:1000;`;
   myDiv.innerHTML = `
     <div style="background-color:white;border-radius:6px;width:350px;overflow-y:hidden;">
     <div style="text-align:center;padding:12px;margin-bottom:6px;background-color:#008F8C;"><h5 style="color:white;margin:0px;">🚀 BTC</h5></div>
