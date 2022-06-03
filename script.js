@@ -113,9 +113,15 @@ function drawUI() {
   `
   const myDiv = document.createElement("div");
   myDiv.id = "SCRIPT_PANEL";
-  myDiv.style.cssText = `position:fixed;top:10vh;right:16px;z-index:1000;`;
+  myDiv.style.cssText = `position:fixed;top:50px;right:16px;z-index:1000;`;
   myDiv.innerHTML = `
-    <div style="background-color:white;border-radius:6px;width:350px;overflow-y:hidden;">
+    <style>
+      .MY-PANEL:hover {
+        opacity:1;
+      }
+    </style>
+
+    <div class="MY-PANEL" style="background-color:white;border-radius:6px;width:350px;overflow-y:hidden;opacity:0.5;">
     <div style="text-align:center;padding:12px;margin-bottom:6px;background-color:#008F8C;"><h5 style="color:white;margin:0px;">🚀 BTC</h5></div>
     <div style="padding:5px 12px 8px 12px;display:flex;justify-content:center;">
       <button id="test-btn" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;">Start MultiplyBTC</button>
