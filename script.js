@@ -54,6 +54,8 @@ function drawUI() {
 
       function loopGame(streak, maxStreak, resetStreak) {
         if(window && window.PLAY_MULTIPLY_BTC){
+          currentRatio = 1.50;
+          setRatio("1.50");
           let override = false;
           const checkG = checkGame();
           if (checkG.won) {
@@ -73,16 +75,12 @@ function drawUI() {
           if (!override) {
             if (streak < maxStreak) {
               streak++;
-              currentRatio = 1.07;
               currentBetAmount = amounts[1];
-              setRatio("1.07");
               setBetAmount(amounts[1]);
               playGame();
             } else if (streak < (maxStreak + resetStreak)) {
               streak++;
-              currentRatio = 1.07;
               currentBetAmount = amounts[0];
-              setRatio("1.07");
               setBetAmount(amounts[0]);
               playGame();
             } else {
@@ -93,10 +91,10 @@ function drawUI() {
         setTimeout(function() { 
           updateText();
           loopGame(streak, maxStreak, resetStreak); 
-        }, streak === 0 ? 100 : 1500);
+        }, streak === 0 || !window.PLAY_MULTIPLY_BTC ? 100 : 5000);
       }
       
-      loopGame(0, 999999999, 4);
+      loopGame(0, 5, 10);
       document.getElementById("test-btn").addEventListener(
         "click",
         function() {
@@ -111,16 +109,18 @@ function drawUI() {
       );
     }); 
   `
+
+  const myStyle = document.createElement("style");
+  myStyle.innerText = `
+    .MY-PANEL:hover {
+      opacity:1;
+    }
+  `
+
   const myDiv = document.createElement("div");
   myDiv.id = "SCRIPT_PANEL";
   myDiv.style.cssText = `position:fixed;top:50px;right:16px;z-index:1000;`;
   myDiv.innerHTML = `
-    <style>
-      .MY-PANEL:hover {
-        opacity:1;
-      }
-    </style>
-
     <div class="MY-PANEL" style="background-color:white;border-radius:6px;width:350px;overflow-y:hidden;opacity:0.5;">
     <div style="text-align:center;padding:12px;margin-bottom:6px;background-color:#008F8C;"><h5 style="color:white;margin:0px;">🚀 BTC</h5></div>
     <div style="padding:5px 12px 8px 12px;display:flex;justify-content:center;">
@@ -170,6 +170,7 @@ function drawUI() {
     </div>
     </div>
   `;
+  document.body.appendChild(myStyle);
   document.body.appendChild(myDiv);
   setTimeout(() => {
     document.body.appendChild(script)
