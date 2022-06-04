@@ -27,7 +27,12 @@ function drawUI() {
       }
 
       function playGame()  {
-        document.getElementById("double_your_btc_bet_hi_button").click();
+        const rand = Math.random();
+        if (rand >= .42) {
+          document.getElementById("double_your_btc_bet_hi_button").click();
+        } else {
+          document.getElementById("double_your_btc_bet_lo_button").click();
+        }
       }
 
       function checkGame() {
@@ -41,9 +46,9 @@ function drawUI() {
         balance = getBalance();
         
         document.getElementById("amount-2").innerText = amounts[1];
-        document.getElementById("winning-2").innerText = parseFloat(amounts[1] * .07).toFixed(8);
+        document.getElementById("winning-2").innerText = parseFloat(amounts[1] * .5).toFixed(8);
         document.getElementById("amount-3").innerText = amounts[2];
-        document.getElementById("winning-3").innerText = parseFloat(amounts[2] * .07).toFixed(8);
+        document.getElementById("winning-3").innerText = parseFloat(amounts[2] * .5).toFixed(8);
         document.getElementById("game-wins").innerText = wins;
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
@@ -65,9 +70,7 @@ function drawUI() {
             loss++;
             lostBTC += parseFloat(currentBetAmount);
             override = true;
-            currentRatio = 1.07;
             currentBetAmount = amounts[2];
-            setRatio("1.07");
             setBetAmount(amounts[2]);
             playGame();
           }
@@ -100,9 +103,11 @@ function drawUI() {
         function() {
           window.PLAY_MULTIPLY_BTC = !window.PLAY_MULTIPLY_BTC;
           if (window.PLAY_MULTIPLY_BTC) {
+            $('.MY-PANEL').addClass('MY-PANEL-ACTIVE');
             $('.double_your_btc_link').click();
             document.getElementById("test-btn").innerText = "Stop MultiplyBTC";
           } else {
+            $('.MY-PANEL').removeClass('MY-PANEL-ACTIVE');
             document.getElementById("test-btn").innerText = "Start MultiplyBTC";
           }
         }
@@ -111,10 +116,9 @@ function drawUI() {
   `
 
   const myStyle = document.createElement("style");
-  myStyle.innerText = `
-    .MY-PANEL:hover {
-      opacity:1;
-    }
+  myStyle.innerHTML = `
+    .MY-PANEL:hover { opacity: 1 !important;; }
+    .MY-PANEL-ACTIVE { opacity: 1 !important; }
   `
 
   const myDiv = document.createElement("div");
