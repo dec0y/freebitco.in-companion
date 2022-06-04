@@ -8,7 +8,7 @@ function drawUI() {
       }
 
       let balance = getBalance();
-      let amounts = ["0.00000001", (balance * .05).toFixed(8), (balance * .2).toFixed(8)];
+      let amounts = ["0.00000002", (balance * .05).toFixed(8), (balance * .2).toFixed(8)];
 
       let wins = 0;
       let loss = 0;
