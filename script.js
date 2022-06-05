@@ -123,8 +123,8 @@ function drawUI() {
       document.getElementById("AUTO-PLAY-BTN").addEventListener(
         "click",
         function () {
-          window.AUTOPLAY_MULTIPLY_BTC = !window.AUTOPLAY_MULTIPLY_BTC;
-          if (window.AUTOPLAY_MULTIPLY_BTC) {
+          localStorage.setItem("AUTOPLAY_MULTIPLY_BTC", !localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"));;
+          if (localStorage.getItem("AUTOPLAY_MULTIPLY_BTC")) {
             document.getElementById("AUTO-PLAY-BTN").innerText = "AutoPlay (ON)";
           } else {
             document.getElementById("AUTO-PLAY-BTN").innerText = "AutoPlay (OFF)";
@@ -188,7 +188,7 @@ function drawUI() {
       
       start();
 
-      if (window.AUTOPLAY_MULTIPLY_BTC) {
+      if (localStorage.getItem("AUTOPLAY_MULTIPLY_BTC")) {
         document.getElementById("AUTO-PLAY-BTN").innerText = "AutoPlay (ON)";
       } else {
         document.getElementById("AUTO-PLAY-BTN").innerText = "AutoPlay (OFF)";
