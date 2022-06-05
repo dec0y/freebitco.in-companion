@@ -87,7 +87,7 @@ function drawUI() {
           }
         } 
         setTimeout(() => { 
-          if (streak !== 0) {
+          if (window.PLAY_MULTIPLY_BTC && streak !== 0) {
             const checkG = checkGame();
             if (checkG.won) {
               wins++;
