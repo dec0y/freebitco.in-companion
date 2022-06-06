@@ -328,7 +328,7 @@ function drawUI() {
       <button id="TOGGLE-PLAY-SETTINGS" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;">⚙</button>
     </div>
     
-    <div style="padding:0px 12px;">
+    <div style="padding:12px;">
       <table style="width:100%;margin:0px;">
         <tr><th colspan="2">Stats</th></tr>
         <tr>
@@ -362,7 +362,7 @@ function drawUI() {
         
       </table>
     </div>
-    <div class="MY-PANEL-SETTINGS" style="padding:12px;flex-wrap:nowrap;font-size:12px;">
+    <div class="MY-PANEL-SETTINGS" style="padding:12px;flex-wrap:nowrap;font-size:12px;padding-top:0px;">
     <table style="width:100%;margin:0px;">
         <tr><th colspan="2">Settings</th></tr>
         <tr>
