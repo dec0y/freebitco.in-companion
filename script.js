@@ -64,7 +64,7 @@ function drawUI() {
       }
 
       function updateText() {        
-        document.getElementById("totalBet").innerText = totalBet;
+        document.getElementById("totalBet").innerText = totalBet.toFixed(8);
         document.getElementById("game-wins").innerText = wins;
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
@@ -77,7 +77,7 @@ function drawUI() {
         if (window && window.PLAY_MULTIPLY_BTC) {
           currentRatio = 10.00;
           setRatio("10.00");
-          totalBet += currentBetAmount;
+          totalBet += parseFloat(currentBetAmount);
           playGame();
           checkGame();
         } else {
