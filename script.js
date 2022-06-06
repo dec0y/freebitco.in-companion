@@ -174,6 +174,20 @@ function drawUI() {
         }
       );
 
+      document.getElementById("TOGGLE-PANEL-VISIBILITY").addEventListener(
+        "click",
+        function() {
+            const currentStyle = document.getElementsByClassName('MY-PANEL')[0].style.transform;
+            if (currentStyle === 'translateX(-10px)') {
+              document.getElementById("TOGGLE-PANEL-VISIBILITY").innerText = '⬅';
+              document.getElementsByClassName('MY-PANEL')[0].style.transform = 'translateX(300px)';
+            } else {
+              document.getElementById("TOGGLE-PANEL-VISIBILITY").innerText = '➡';
+              document.getElementsByClassName('MY-PANEL')[0].style.transform = 'translateX(-10px)';
+            }
+        }
+      );
+
       document.getElementById("TOGGLE-PLAY-SETTINGS").addEventListener(
         "click",
         function() {
@@ -288,8 +302,15 @@ function drawUI() {
   myDiv.id = "SCRIPT_PANEL";
   myDiv.style.cssText = `position:fixed;top:50px;right:16px;z-index:1000;`;
   myDiv.innerHTML = `
-    <div class="MY-PANEL" style="background-color:white;border-radius:6px;width:350px;overflow-y:hidden;opacity:0.5;">
-    <div style="text-align:center;padding:12px;margin-bottom:6px;background-color:#008F8C;"><h5 style="color:white;margin:0px;">🚀 BTC</h5></div>
+    <div class="MY-PANEL" style="background-color:white;border-radius:6px;width:350px;overflow-y:hidden;opacity:0.5;transform:translateX(300px);">
+    <div style="text-align:center;padding:12px;margin-bottom:6px;background-color:#008F8C;position:relative">
+      <h5 style="color:white;margin:0px;">🚀 BTC</h5>
+      <div style="position:absolute;top:0px;left:0px;width:100%;height:100%;display:flex;padding-left:12px;align-items:center;">
+      <div>
+      <button id="TOGGLE-PANEL-VISIBILITY" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;">⬅</button>
+      </div>
+      </div>
+    </div>
     <div style="padding:5px 12px 8px 12px;display:flex;justify-content:center;">
       <button id="test-btn" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;margin-right:8px">Start MultiplyBTC</button>
       <button id="AUTO-PLAY-BTN" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;margin-right:8px"></button>
