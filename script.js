@@ -57,6 +57,7 @@ function drawUI() {
 
         if(!result.won && !result.lost) {
           setTimeout(() => { checkGame(); }, 50);
+          return;
         } else {
           if (result.won) {
             wins++;
