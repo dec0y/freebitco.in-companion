@@ -53,7 +53,9 @@ function drawUI() {
             setBetAmount(currentBetAmount);
           }
           updateText();
-          loopGame();
+          setTimeout(() => {
+            loopGame();
+          }, 100);
         }
 
         
