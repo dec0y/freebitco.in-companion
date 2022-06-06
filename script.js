@@ -43,13 +43,7 @@ function drawUI() {
         return result;
       }
 
-      function updateText() {
-        balance = getBalance();
-        
-        document.getElementById("amount-2").innerText = "0.00000001";
-        document.getElementById("winning-2").innerText = parseFloat(0.00000001 * 10).toFixed(8);
-        document.getElementById("amount-3").innerText = currentBetAmount;
-        document.getElementById("winning-3").innerText = parseFloat(currentBetAmount * 10).toFixed(8);
+      function updateText() {        
         document.getElementById("game-wins").innerText = wins;
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
@@ -221,24 +215,6 @@ function drawUI() {
           <td id="btc-profit"></td>
         </tr>
         
-      </table>
-    </div>
-    <div style="padding:0px 12px;">
-      <table style="width:100%;">
-        <tr>
-          <th colspan="2">Bet Amounts</th>
-        </tr>
-        <tr>
-          <td id="amount-2"></td>
-          <td id="amount-3"></td>
-        </tr>
-        <tr>
-          <th colspan="2">If Won</th>
-        </tr>
-        <tr>
-          <td id="winning-2"></td>
-          <td id="winning-3"></td>
-        </tr>
       </table>
     </div>
     </div>
