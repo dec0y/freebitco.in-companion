@@ -14,8 +14,12 @@ function drawUI() {
       let lostBTC = 0.00000000;
       let totalBet = 0;
 
-      let currentBetAmount = parseFloat(0.00000001).toFixed(8);
+      let currentBetAmount = (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8);
       let currentRatio = 10.00;
+
+      let incrementAmount = (parseInt(document.getElementById("PLAY-INCREMENT-BET").value) / 100000000).toFixed(8)
+
+
 
       let override = false;
 
@@ -54,7 +58,7 @@ function drawUI() {
           } else {
             loss++;
             lostBTC += parseFloat(currentBetAmount);
-            currentBetAmount = (parseFloat(currentBetAmount) + 0.00000001).toFixed(8);
+            currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(incrementAmount)).toFixed(8);
             setBetAmount(currentBetAmount);
           }
           updateText();
@@ -91,6 +95,7 @@ function drawUI() {
         } 
       }
       
+      updateText();
       loopGame();
       
       function TestBtnClicked() {
@@ -123,6 +128,7 @@ function drawUI() {
           }
         }
       );
+
       
       function clickRoll() {
         window.scrollTo({ top: 1000, behavior: 'smooth' });
@@ -213,6 +219,10 @@ function drawUI() {
       <div style="display:flex;align-items:center;width:50%;padding-left:4px">
         <div style="margin-right:4px">Bet</div>
         <input style="margin:0px" id="PLAY-STARTING-BET" value="1" type="number" />
+      </div>
+      <div style="display:flex;align-items:center;width:50%;padding-left:4px">
+        <div style="margin-right:4px">Incr</div>
+        <input style="margin:0px" id="PLAY-INCREMENT-BET" value="1" type="number" />
       </div>
     </div>
     <div style="padding:0px 12px;">
