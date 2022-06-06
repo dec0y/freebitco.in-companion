@@ -40,7 +40,7 @@ function drawUI() {
       function updateText() {
         balance = getBalance();
         
-        document.getElementById("amount-2").innerText = 0.00000001;
+        document.getElementById("amount-2").innerText = "0.00000001";
         document.getElementById("winning-2").innerText = parseFloat(0.00000001 * 10).toFixed(8);
         document.getElementById("amount-3").innerText = currentBetAmount;
         document.getElementById("winning-3").innerText = parseFloat(currentBetAmount * 10).toFixed(8);
