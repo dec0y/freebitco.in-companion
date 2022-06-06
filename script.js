@@ -13,8 +13,8 @@ function drawUI() {
       let winBTC = 0.00000000;
       let lostBTC = 0.00000000;
 
-      let currentBetAmount = null;
-      let currentRatio = null;
+      let currentBetAmount = parseFloat(0.00000001).toFixed(8);
+      let currentRatio = 10.00;
 
       let override = false;
 
@@ -31,15 +31,32 @@ function drawUI() {
       }
 
       function checkGame() {
-
         const result = {
           won: document.getElementById("double_your_btc_bet_win").style.display !== "none",
           lost: document.getElementById("double_your_btc_bet_lose").style.display !== "none",
         };
 
-        document.getElementById("double_your_btc_bet_win").style.display = 'none';
-        document.getElementById("double_your_btc_bet_lose").style.display = 'none';
+        if(!result.won && !result.lost) {
+          setTimeout(() => { checkGame(); }, 50);
+        } else {
+          document.getElementById("double_your_btc_bet_win").style.display = 'none';
+          document.getElementById("double_your_btc_bet_lose").style.display = 'none';
+          if (result.won) {
+            wins++;
+            winBTC += currentBetAmount * (currentRatio - 1);
+            currentBetAmount = parseFloat(0.00000001).toFixed(8);
+            setBetAmount("0.00000001");
+          } else {
+            loss++;
+            lostBTC += parseFloat(currentBetAmount);
+            currentBetAmount = (parseFloat(currentBetAmount) + 0.00000001).toFixed(8);
+            setBetAmount(currentBetAmount);
+          }
+          updateText();
+          loopGame();
+        }
 
+        
         return result;
       }
 
@@ -52,34 +69,20 @@ function drawUI() {
         document.getElementById("btc-profit").innerText = (winBTC - lostBTC).toFixed(8);
       }
 
-      function loopGame(streak, maxStreak, resetStreak) {
+      function loopGame() {
         if (window && window.PLAY_MULTIPLY_BTC) {
-          
           currentRatio = 10.00;
           setRatio("10.00");
-          const checkG = checkGame();
-          if (checkG.won) {
-            wins++;
-            winBTC += currentBetAmount * (currentRatio - 1);
-            currentBetAmount = parseFloat(0.00000001).toFixed(8);
-            setBetAmount("0.00000001");
-            playGame();
-          } else if (checkG.lost) {
-            loss++;
-            lostBTC += parseFloat(currentBetAmount);
-            currentBetAmount = (parseFloat(currentBetAmount) + 0.00000001).toFixed(8);
-            setBetAmount(currentBetAmount);
-            playGame(); 
-          }
-          updateText();
+          playGame();
+          checkGame();
+        } else {
+          setTimeout(() => {
+            loopGame();
+          }, 50);
         } 
-        setTimeout(() => { 
-          updateText();
-          loopGame(streak, maxStreak, resetStreak); 
-        }, 5000);
       }
       
-      loopGame(0, 4, 2);
+      loopGame();
       
       function TestBtnClicked() {
         window.PLAY_MULTIPLY_BTC = !window.PLAY_MULTIPLY_BTC;
