@@ -31,10 +31,16 @@ function drawUI() {
       }
 
       function checkGame() {
-        return {
+
+        const result = {
           won: document.getElementById("double_your_btc_bet_win").style.display !== "none",
           lost: document.getElementById("double_your_btc_bet_lose").style.display !== "none",
         };
+
+        document.getElementById("double_your_btc_bet_win").style.display = 'none';
+        document.getElementById("double_your_btc_bet_lose").style.display = 'none';
+
+        return result;
       }
 
       function updateText() {
@@ -71,6 +77,7 @@ function drawUI() {
             setBetAmount(currentBetAmount);
             playGame(); 
           }
+          updateText();
         } 
         setTimeout(() => { 
           updateText();
