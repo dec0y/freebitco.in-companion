@@ -70,12 +70,12 @@ function drawUI() {
             currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(storedObj.incrementAmount)).toFixed(8);
             setBetAmount(currentBetAmount);
           }
-          document.getElementById("double_your_btc_bet_win").style.display = 'none';
-          document.getElementById("double_your_btc_bet_lose").style.display = 'none';
           updateText();
           setTimeout(() => {
             loopGame();
-          }, 200);
+          }, 500);
+          document.getElementById("double_your_btc_bet_win").style.display = 'none';
+          document.getElementById("double_your_btc_bet_lose").style.display = 'none';
           document.getElementsByClassName('top-bar-section')[0].style.display = 'block';
         }
 
@@ -318,7 +318,7 @@ function drawUI() {
   myDiv.innerHTML = `
     <div class="MY-PANEL" style="background-color:white;border-radius:6px;width:350px;overflow-y:hidden;opacity:0.5;transform:translateX(300px);">
     <div style="text-align:center;padding:12px;margin-bottom:6px;background-color:#008F8C;position:relative">
-      <h5 style="color:white;margin:0px;">🚀 BTC</h5>
+      <h5 style="color:white;margin:0px;">🚀 BTC 🚀</h5>
       <div style="position:absolute;top:0px;left:0px;width:100%;height:100%;display:flex;padding-left:12px;align-items:center;">
       <div>
       <button id="TOGGLE-PANEL-VISIBILITY" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;">⬅</button>
