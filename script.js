@@ -14,15 +14,28 @@ function drawUI() {
       let lostBTC = 0.00000000;
       let totalBet = 0;
 
-      let currentBetAmount = (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8);
-      let currentRatio = 10.00;
+      let storedObj = JSON.parse(localStorage.getItem("AUTOPLAY-OBJ"));
+      if(!storedObj) {
+        storedObj = {
+          currentBetAmount: (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8),
+          currentRatio: 10.00,
+          incrementAmount: (parseInt(document.getElementById("PLAY-INCREMENT-BET").value) / 100000000).toFixed(8),
+          autoGamesCount: parseInt(document.getElementById("AUTO-GAME-COUNT"))
+  
+        };
+        localStorage.setItem("AUTOPLAY-OBJ", JSON.stringify(storedObj));
+      }
 
-      let incrementAmount = (parseInt(document.getElementById("PLAY-INCREMENT-BET").value) / 100000000).toFixed(8)
+      let currentBetAmount = storedObj.currentBetAmount;
+      let currentRatio = storedObj.currentRatio;
+      let incrementAmount = storedObj.incrementAmount;
+      let autoGames = storedObj.autoGamesCount;
 
+      document.getElementById("PLAY-STARTING-BET").value = currentBetAmount * 100000000;
+      document.getElementById("PLAY-RATIO").value = currentRatio;
+      document.getElementById("PLAY-INCREMENT-BET").value = incrementAmount * 100000000;
+      document.getElementById("AUTO-GAME-COUNT").value = autoGames;
 
-      let autoGames = parseInt(document.getElementById("AUTO-GAME-COUNT"));
-
-      let override = false;
 
       function setRatio(value) {
         document.getElementById("double_your_btc_payout_multiplier").value = value;
@@ -65,7 +78,7 @@ function drawUI() {
           updateText();
           setTimeout(() => {
             loopGame();
-          }, 100);
+          }, 200);
         }
 
         
@@ -125,7 +138,7 @@ function drawUI() {
           updateText();
           setTimeout(() => {
             playAutoGames();
-          }, 100);
+          }, 200);
         }
       }
 
@@ -158,6 +171,33 @@ function drawUI() {
         "click",
         function() {
             testBtnClicked();
+        }
+      );
+
+      document.getElementById("TOGGLE-PLAY-SETTINGS").addEventListener(
+        "click",
+        function() {
+            if ($('.MY-PANEL-SETTINGS').hasClass('ACTIVE')) {
+              document.getElementById("TOGGLE-PLAY-SETTINGS").innerText = '⚙';
+              $('.MY-PANEL-SETTINGS').removeClass('ACTIVE');
+            } else {
+              document.getElementById("TOGGLE-PLAY-SETTINGS").innerText = '✖';
+              $('.MY-PANEL-SETTINGS').addClass('ACTIVE');
+            }
+        }
+      );
+
+      document.getElementById("SAVE-AUTO-PLAY-SETTINGS").addEventListener(
+        "click",
+        function() {
+          storedObj = {
+            currentBetAmount: (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8),
+            currentRatio: parseFloat(document.getElementById('PLAY-RATIO').value),
+            incrementAmount: (parseInt(document.getElementById("PLAY-INCREMENT-BET").value) / 100000000).toFixed(8),
+            autoGamesCount: parseInt(document.getElementById("AUTO-GAME-COUNT").value)
+    
+          };
+          localStorage.setItem("AUTOPLAY-OBJ", JSON.stringify(storedObj));
         }
       );
 
@@ -240,6 +280,8 @@ function drawUI() {
   myStyle.innerHTML = `
     .MY-PANEL:hover { opacity: 1 !important;; }
     .MY-PANEL-ACTIVE { opacity: 1 !important; }
+    .MY-PANEL-SETTINGS { display:none; }
+    .MY-PANEL-SETTINGS.ACTIVE { display: flex; }
   `
 
   const myDiv = document.createElement("div");
@@ -250,28 +292,10 @@ function drawUI() {
     <div style="text-align:center;padding:12px;margin-bottom:6px;background-color:#008F8C;"><h5 style="color:white;margin:0px;">🚀 BTC</h5></div>
     <div style="padding:5px 12px 8px 12px;display:flex;justify-content:center;">
       <button id="test-btn" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;margin-right:8px">Start MultiplyBTC</button>
-      <button id="AUTO-PLAY-BTN" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;"></button>
+      <button id="AUTO-PLAY-BTN" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;margin-right:8px"></button>
+      <button id="TOGGLE-PLAY-SETTINGS" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;">⚙</button>
     </div>
-    <div style="padding:12px;display:flex;flex-wrap:nowrap;font-size:12px;">
-      <div style="display:flex;align-items:center;">
-        <div style="margin-right:4px">Auto Game Count</div>
-        <input style="margin:0px" id="AUTO-GAME-COUNT" value="30" type="number" />
-      </div>
-    </div>
-    <div style="padding:12px;display:flex;flex-wrap:nowrap;font-size:12px;">
-      <div style="display:flex;align-items:center;width:50%;">
-        <div style="margin-right:4px">Odds</div>
-        <input style="margin:0px" id="PLAY-RATIO" value="10.00" type="number" />
-      </div>
-      <div style="display:flex;align-items:center;width:50%;padding-left:4px">
-        <div style="margin-right:4px">Bet</div>
-        <input style="margin:0px" id="PLAY-STARTING-BET" value="1" type="number" />
-      </div>
-      <div style="display:flex;align-items:center;width:50%;padding-left:4px">
-        <div style="margin-right:4px">Incr</div>
-        <input style="margin:0px" id="PLAY-INCREMENT-BET" value="1" type="number" />
-      </div>
-    </div>
+    
     <div style="padding:0px 12px;">
       <table style="width:100%;">
         <tr><th colspan="2">Stats</th></tr>
@@ -299,6 +323,45 @@ function drawUI() {
         </tr>
         
       </table>
+    </div>
+    <div class="MY-PANEL-SETTINGS" style="padding:12px;flex-wrap:nowrap;font-size:12px;">
+    <table style="width:100%;">
+        <tr><th colspan="2">Settings</th></tr>
+        <tr>
+          <td style="text-align:right;">Odds</td>
+          <td>
+            <input style="margin:0px;width:100px;" id="PLAY-RATIO" value="10.00" type="number" />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:right;">Start</td>
+          <td>
+            <input style="margin:0px;width:100px;" id="PLAY-STARTING-BET" value="1" type="number" />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:right;">Increment</td>
+          <td>
+          <input style="margin:0px;width:100px;" id="PLAY-INCREMENT-BET" value="1" type="number" />
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:right;">AutoPlay #</td>
+          <td>
+          <input style="margin:0px;width:100px;" id="AUTO-GAME-COUNT" value="30" type="number" />
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">
+          <div style="display:flex;align-items:center;padding-left: 4px;justify-content:flex-end;flex:1 1 auto;">
+            <button id="SAVE-AUTO-PLAY-SETTINGS" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;">Save</button>
+          </div>
+          </th>
+        </tr>
+        
+      </table>
+
+      
     </div>
     </div>
   `;
