@@ -62,13 +62,13 @@ function drawUI() {
           document.getElementById("double_your_btc_bet_lose").style.display = 'none';
           if (result.won) {
             wins++;
-            winBTC += document.getElementsByClassName('double_your_btc_bet_win_message')[0].innerText.replace('You BET HI so you win ', '').replace(' BTC!', '');
+            winBTC += parseFloat(document.getElementsByClassName('double_your_btc_bet_win_message')[0].innerText.replace('You BET HI so you win ', '').replace(' BTC!', ''));
             const startingBetAmount = (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8);
             currentBetAmount = parseFloat(startingBetAmount).toFixed(8);
             setBetAmount(startingBetAmount);
           } else {
             loss++;
-            lostBTC += document.getElementsByClassName('double_your_btc_bet_lose_message')[0].innerText.replace('You BET HI so you lose ', '').replace(' BTC', '');
+            lostBTC += parseFloat(document.getElementsByClassName('double_your_btc_bet_lose_message')[0].innerText.replace('You BET HI so you lose ', '').replace(' BTC', ''));
             currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(storedObj.incrementAmount)).toFixed(8);
             setBetAmount(currentBetAmount);
           }
