@@ -63,22 +63,20 @@ function drawUI() {
           if (result.won) {
             wins++;
             winBTC += currentBetAmount * (currentRatio - 1);
-
             const startingBetAmount = (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8);
-
             currentBetAmount = parseFloat(startingBetAmount).toFixed(8);
-
             setBetAmount(startingBetAmount);
           } else {
             loss++;
             lostBTC += parseFloat(currentBetAmount);
-            currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(incrementAmount)).toFixed(8);
+            currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(storedObj.incrementAmount)).toFixed(8);
             setBetAmount(currentBetAmount);
           }
           updateText();
           setTimeout(() => {
             loopGame();
           }, 200);
+          document.getElementsByClassName('top-bar-section')[0].style.display = 'block';
         }
 
         
@@ -88,6 +86,8 @@ function drawUI() {
       function updateText() {        
         document.getElementById("totalBet").innerText = totalBet.toFixed(8);
         document.getElementById("game-wins").innerText = wins;
+        document.getElementById("game-wins-p").innerText = ((loss / wins) * 100).toFixed(2);
+        document.getElementById("game-loss-p").innerText = ((wins / loss) * 100).toFixed(2);
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
         document.getElementById("btc-won").innerText = winBTC.toFixed(8);
@@ -107,6 +107,7 @@ function drawUI() {
             loopGame();
           }, 50);
         } 
+
       }
       
       updateText();
@@ -318,12 +319,18 @@ function drawUI() {
     </div>
     
     <div style="padding:0px 12px;">
-      <table style="width:100%;">
+      <table style="width:100%;margin:0px;">
         <tr><th colspan="2">Stats</th></tr>
         <tr>
           <td>Wins/Lost/Total</td>
           <td>
             <span id="game-wins"></span>/<span id="game-loss"></span>/<span id="game-total"></span>
+          </td>
+        </tr>
+        <tr>
+          <td>Wins/Loss %</td>
+          <td>
+            <span id="game-wins-p"></span>/<span id="game-loss-p"></span>
           </td>
         </tr>
         <tr>
@@ -346,7 +353,7 @@ function drawUI() {
       </table>
     </div>
     <div class="MY-PANEL-SETTINGS" style="padding:12px;flex-wrap:nowrap;font-size:12px;">
-    <table style="width:100%;">
+    <table style="width:100%;margin:0px;">
         <tr><th colspan="2">Settings</th></tr>
         <tr>
           <td style="text-align:right;">Odds</td>
