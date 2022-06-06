@@ -12,6 +12,7 @@ function drawUI() {
       let loss = 0;
       let winBTC = 0.00000000;
       let lostBTC = 0.00000000;
+      let totalBet = 0;
 
       let currentBetAmount = parseFloat(0.00000001).toFixed(8);
       let currentRatio = 10.00;
@@ -63,6 +64,7 @@ function drawUI() {
       }
 
       function updateText() {        
+        document.getElementById("totalBet").innerText = totalBet;
         document.getElementById("game-wins").innerText = wins;
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
@@ -75,6 +77,7 @@ function drawUI() {
         if (window && window.PLAY_MULTIPLY_BTC) {
           currentRatio = 10.00;
           setRatio("10.00");
+          totalBet += currentBetAmount;
           playGame();
           checkGame();
         } else {
@@ -218,6 +221,10 @@ function drawUI() {
         <tr>
           <td>BTC Profit</td>
           <td id="btc-profit"></td>
+        </tr>
+        <tr>
+          <td>Total Bet</td>
+          <td id="totalBet"></td>
         </tr>
         
       </table>
