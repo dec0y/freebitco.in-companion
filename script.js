@@ -99,14 +99,14 @@ function drawUI() {
       updateText();
       loopGame();
 
-      function PlayAutoGamesCheck() {
+      function playAutoGamesCheck() {
         const result = {
           won: document.getElementById("double_your_btc_bet_win").style.display !== "none",
           lost: document.getElementById("double_your_btc_bet_lose").style.display !== "none",
         };
 
         if(!result.won && !result.lost) {
-          setTimeout(() => { checkGame(); }, 50);
+          setTimeout(() => { playAutoGamesCheck(); }, 50);
         } else {
           document.getElementById("double_your_btc_bet_win").style.display = 'none';
           document.getElementById("double_your_btc_bet_lose").style.display = 'none';
@@ -124,25 +124,25 @@ function drawUI() {
           }
           updateText();
           setTimeout(() => {
-            PlayAutoGames();
+            playAutoGames();
           }, 100);
         }
       }
 
-      function PlayAutoGames() {
+      function playAutoGames() {
         if (autoGames > 0) {
           autoGames--;
           currentRatio = parseFloat(document.getElementById('PLAY-RATIO').value);
           setRatio(currentRatio.toString());
           totalBet += parseFloat(currentBetAmount);
           playGame();
-          PlayAutoGamesCheck();
+          playAutoGamesCheck();
         } else {
           $('.free_play_link').click();
         }
       }
       
-      function TestBtnClicked() {
+      function testBtnClicked() {
         window.PLAY_MULTIPLY_BTC = !window.PLAY_MULTIPLY_BTC;
           if (window.PLAY_MULTIPLY_BTC) {
             $('.MY-PANEL').addClass('MY-PANEL-ACTIVE');
@@ -157,7 +157,7 @@ function drawUI() {
       document.getElementById("test-btn").addEventListener(
         "click",
         function() {
-            TestBtnClicked();
+            testBtnClicked();
         }
       );
 
@@ -188,7 +188,7 @@ function drawUI() {
             setTimeout(function () {
               closeModal();
               if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
-                PlayAutoGames();
+                playAutoGames();
               }
             }, 5000);
           } else {
