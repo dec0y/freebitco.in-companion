@@ -126,6 +126,7 @@ function drawUI() {
           setTimeout(() => {
             PlayAutoGames();
           }, 100);
+        }
       }
 
       function PlayAutoGames() {
