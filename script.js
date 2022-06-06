@@ -80,10 +80,8 @@ function drawUI() {
       
       loopGame(0, 4, 2);
       
-      document.getElementById("test-btn").addEventListener(
-        "click",
-        function() {
-          window.PLAY_MULTIPLY_BTC = !window.PLAY_MULTIPLY_BTC;
+      function TestBtnClicked() {
+        window.PLAY_MULTIPLY_BTC = !window.PLAY_MULTIPLY_BTC;
           if (window.PLAY_MULTIPLY_BTC) {
             $('.MY-PANEL').addClass('MY-PANEL-ACTIVE');
             $('.double_your_btc_link').click();
@@ -92,6 +90,12 @@ function drawUI() {
             $('.MY-PANEL').removeClass('MY-PANEL-ACTIVE');
             document.getElementById("test-btn").innerText = "Start MultiplyBTC";
           }
+      }
+
+      document.getElementById("test-btn").addEventListener(
+        "click",
+        function() {
+            TestBtnClicked();
         }
       );
 
@@ -121,13 +125,13 @@ function drawUI() {
             setTimeout(function () {
               closeModal();
               if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
-                $('.test-btn').click();
+                TestBtnClicked();
               }
             }, 5000);
           } else {
             console.log('No Roll');
             if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
-              $('.test-btn').click();
+              TestBtnClicked();
             }
           }
       
