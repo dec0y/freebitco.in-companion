@@ -91,9 +91,12 @@ function drawUI() {
         if (wins > loss) {
           perct.win = ((loss / wins) * 100).toFixed(2);
           perct.loss = (100 - (loss / wins) * 100).toFixed(2);
-        } else {
+        } else if (loss > wins) {
           perct.win = ((wins / loss) * 100).toFixed(2);
           perct.loss = (100 - (wins / loss) * 100).toFixed(2);
+        } else {
+          perct.win = 0;
+          perct.loss = 0;
         }
 
         document.getElementById("game-wins-p").innerText = perct.win + '%';
