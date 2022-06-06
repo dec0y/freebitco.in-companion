@@ -58,8 +58,6 @@ function drawUI() {
         if(!result.won && !result.lost) {
           setTimeout(() => { checkGame(); }, 50);
         } else {
-          document.getElementById("double_your_btc_bet_win").style.display = 'none';
-          document.getElementById("double_your_btc_bet_lose").style.display = 'none';
           if (result.won) {
             wins++;
             winBTC += parseFloat(document.getElementsByClassName('double_your_btc_bet_win_message')[0].innerText.replace('You BET HI so you win ', '').replace(' BTC!', ''));
@@ -72,6 +70,8 @@ function drawUI() {
             currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(storedObj.incrementAmount)).toFixed(8);
             setBetAmount(currentBetAmount);
           }
+          document.getElementById("double_your_btc_bet_win").style.display = 'none';
+          document.getElementById("double_your_btc_bet_lose").style.display = 'none';
           updateText();
           setTimeout(() => {
             loopGame();
