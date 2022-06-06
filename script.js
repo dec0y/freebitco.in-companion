@@ -86,8 +86,18 @@ function drawUI() {
       function updateText() {        
         document.getElementById("totalBet").innerText = totalBet.toFixed(8);
         document.getElementById("game-wins").innerText = wins;
-        document.getElementById("game-wins-p").innerText = ((loss / wins) * 100).toFixed(2);
-        document.getElementById("game-loss-p").innerText = ((wins / loss) * 100).toFixed(2);
+
+        let perct = {};
+        if (wins > loss) {
+          perct.win = ((loss / wins) * 100).toFixed(2);
+          perct.loss = (100 - (loss / wins) * 100).toFixed(2);
+        } else {
+          perct.win = ((wins / loss) * 100).toFixed(2);
+          perct.loss = (100 - (wins / loss) * 100).toFixed(2);
+        }
+
+        document.getElementById("game-wins-p").innerText = perct.win + '%';
+        document.getElementById("game-loss-p").innerText = perct.loss + '%';
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
         document.getElementById("btc-won").innerText = winBTC.toFixed(8);
