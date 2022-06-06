@@ -253,7 +253,7 @@ function drawUI() {
       <button id="AUTO-PLAY-BTN" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;"></button>
     </div>
     <div style="padding:12px;display:flex;flex-wrap:nowrap;font-size:12px;">
-      <div style="display:flex;align-items:center;width:50%;">
+      <div style="display:flex;align-items:center;">
         <div style="margin-right:4px">Auto Game Count</div>
         <input style="margin:0px" id="AUTO-GAME-COUNT" value="30" type="number" />
       </div>
