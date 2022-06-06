@@ -20,6 +20,7 @@ function drawUI() {
       let incrementAmount = (parseInt(document.getElementById("PLAY-INCREMENT-BET").value) / 100000000).toFixed(8)
 
 
+      let autoGames = parseInt(document.getElementById("AUTO-GAME-COUNT"));
 
       let override = false;
 
@@ -97,6 +98,48 @@ function drawUI() {
       
       updateText();
       loopGame();
+
+      function PlayAutoGamesCheck() {
+        const result = {
+          won: document.getElementById("double_your_btc_bet_win").style.display !== "none",
+          lost: document.getElementById("double_your_btc_bet_lose").style.display !== "none",
+        };
+
+        if(!result.won && !result.lost) {
+          setTimeout(() => { checkGame(); }, 50);
+        } else {
+          document.getElementById("double_your_btc_bet_win").style.display = 'none';
+          document.getElementById("double_your_btc_bet_lose").style.display = 'none';
+          if (result.won) {
+            wins++;
+            winBTC += currentBetAmount * (currentRatio - 1);
+            const startingBetAmount = (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8);
+            currentBetAmount = parseFloat(startingBetAmount).toFixed(8);
+            setBetAmount(startingBetAmount);
+          } else {
+            loss++;
+            lostBTC += parseFloat(currentBetAmount);
+            currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(incrementAmount)).toFixed(8);
+            setBetAmount(currentBetAmount);
+          }
+          updateText();
+          setTimeout(() => {
+            PlayAutoGames();
+          }, 100);
+      }
+
+      function PlayAutoGames() {
+        if (autoGames > 0) {
+          autoGames--;
+          currentRatio = parseFloat(document.getElementById('PLAY-RATIO').value);
+          setRatio(currentRatio.toString());
+          totalBet += parseFloat(currentBetAmount);
+          playGame();
+          PlayAutoGamesCheck();
+        } else {
+          $('.free_play_link').click();
+        }
+      }
       
       function TestBtnClicked() {
         window.PLAY_MULTIPLY_BTC = !window.PLAY_MULTIPLY_BTC;
@@ -144,14 +187,11 @@ function drawUI() {
             setTimeout(function () {
               closeModal();
               if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
-                TestBtnClicked();
+                PlayAutoGames();
               }
             }, 5000);
           } else {
             console.log('No Roll');
-            if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
-              TestBtnClicked();
-            }
           }
       
         }, timing);
@@ -210,6 +250,12 @@ function drawUI() {
     <div style="padding:5px 12px 8px 12px;display:flex;justify-content:center;">
       <button id="test-btn" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;margin-right:8px">Start MultiplyBTC</button>
       <button id="AUTO-PLAY-BTN" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;"></button>
+    </div>
+    <div style="padding:12px;display:flex;flex-wrap:nowrap;font-size:12px;">
+      <div style="display:flex;align-items:center;width:50%;">
+        <div style="margin-right:4px">Auto Game Count</div>
+        <input style="margin:0px" id="AUTO-GAME-COUNT" value="30" type="number" />
+      </div>
     </div>
     <div style="padding:12px;display:flex;flex-wrap:nowrap;font-size:12px;">
       <div style="display:flex;align-items:center;width:50%;">
