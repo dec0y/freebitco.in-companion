@@ -8,6 +8,8 @@ function drawUI() {
       }
 
       let balance = getBalance();
+      let amounts = ["0.00000002", (balance * .05).toFixed(8), (balance * .2).toFixed(8)];
+
       let wins = 0;
       let loss = 0;
       let winBTC = 0.00000000;
@@ -40,10 +42,10 @@ function drawUI() {
       function updateText() {
         balance = getBalance();
         
-        document.getElementById("amount-2").innerText = 0.00000001;
-        document.getElementById("winning-2").innerText = parseFloat(0.00000001 * 10).toFixed(8);
-        document.getElementById("amount-3").innerText = currentBetAmount;
-        document.getElementById("winning-3").innerText = parseFloat(currentBetAmount * 10).toFixed(8);
+        document.getElementById("amount-2").innerText = amounts[1];
+        document.getElementById("winning-2").innerText = parseFloat(amounts[1] * .1).toFixed(8);
+        document.getElementById("amount-3").innerText = amounts[2];
+        document.getElementById("winning-3").innerText = parseFloat(amounts[2] * .1).toFixed(8);
         document.getElementById("game-wins").innerText = wins;
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
@@ -57,25 +59,43 @@ function drawUI() {
           
           currentRatio = 10.00;
           setRatio("10.00");
-          const checkG = checkGame();
-          if (checkG.won) {
-            wins++;
-            winBTC += currentBetAmount * (currentRatio - 1);
-            currentBetAmount = parseFloat(0.00000001).toFixed(8);
-            setBetAmount("0.00000001");
+      
+          if (!override) {
+            if (streak < maxStreak) {
+              streak++;
+              currentBetAmount = amounts[1];
+              setBetAmount(amounts[1]);
+              playGame();
+            } else if (streak < (maxStreak + resetStreak)) {
+              streak++;
+              currentBetAmount = amounts[0];
+              setBetAmount(amounts[0]);
+              playGame();
+            } else {
+              streak = 0;
+            }
+          } else {
+            override = false;
+            currentBetAmount = amounts[2];
+            setBetAmount(amounts[2]);
             playGame();
-          } else if (checkG.lost) {
-            loss++;
-            lostBTC += parseFloat(currentBetAmount);
-            currentBetAmount = (parseFloat(currentBetAmount) + 0.00000001).toFixed(8);
-            setBetAmount(currentBetAmount);
-            playGame(); 
           }
         } 
         setTimeout(() => { 
+          if (window.PLAY_MULTIPLY_BTC && streak !== 0) {
+            const checkG = checkGame();
+            if (checkG.won) {
+              wins++;
+              winBTC += currentBetAmount * (currentRatio - 1);
+            } else if (checkG.lost) {
+              loss++;
+              lostBTC += parseFloat(currentBetAmount);
+              override = true;
+            }
+          }
           updateText();
           loopGame(streak, maxStreak, resetStreak); 
-        }, 5000);
+        }, streak === 0 || !window.PLAY_MULTIPLY_BTC ? 100 : 5000);
       }
       
       loopGame(0, 4, 2);
@@ -98,8 +118,8 @@ function drawUI() {
       document.getElementById("AUTO-PLAY-BTN").addEventListener(
         "click",
         function () {
-          localStorage.setItem("AUTOPLAY_MULTIPLY_BTC", !JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC")));
-          if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
+          localStorage.setItem("AUTOPLAY_MULTIPLY_BTC", !localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"));;
+          if (localStorage.getItem("AUTOPLAY_MULTIPLY_BTC")) {
             document.getElementById("AUTO-PLAY-BTN").innerText = "AutoPlay (ON)";
           } else {
             document.getElementById("AUTO-PLAY-BTN").innerText = "AutoPlay (OFF)";
@@ -120,13 +140,13 @@ function drawUI() {
             console.log("Rolled");
             setTimeout(function () {
               closeModal();
-              if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
+              if (window.AUTOPLAY_MULTIPLY_BTC) {
                 $('.test-btn').click();
               }
             }, 5000);
           } else {
             console.log('No Roll');
-            if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
+            if (window.AUTOPLAY_MULTIPLY_BTC) {
               $('.test-btn').click();
             }
           }
@@ -163,7 +183,7 @@ function drawUI() {
       
       start();
 
-      if (JSON.parse(localStorage.getItem("AUTOPLAY_MULTIPLY_BTC"))) {
+      if (localStorage.getItem("AUTOPLAY_MULTIPLY_BTC")) {
         document.getElementById("AUTO-PLAY-BTN").innerText = "AutoPlay (ON)";
       } else {
         document.getElementById("AUTO-PLAY-BTN").innerText = "AutoPlay (OFF)";
