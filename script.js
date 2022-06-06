@@ -45,8 +45,12 @@ function drawUI() {
           if (result.won) {
             wins++;
             winBTC += currentBetAmount * (currentRatio - 1);
-            currentBetAmount = parseFloat(0.00000001).toFixed(8);
-            setBetAmount("0.00000001");
+
+            const startingBetAmount = (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8);
+
+            currentBetAmount = parseFloat(startingBetAmount).toFixed(8);
+
+            setBetAmount(startingBetAmount);
           } else {
             loss++;
             lostBTC += parseFloat(currentBetAmount);
@@ -75,8 +79,8 @@ function drawUI() {
 
       function loopGame() {
         if (window && window.PLAY_MULTIPLY_BTC) {
-          currentRatio = 10.00;
-          setRatio("10.00");
+          currentRatio = parseFloat(document.getElementById('PLAY-RATIO').value);
+          setRatio(currentRatio.toString());
           totalBet += parseFloat(currentBetAmount);
           playGame();
           checkGame();
@@ -200,6 +204,16 @@ function drawUI() {
     <div style="padding:5px 12px 8px 12px;display:flex;justify-content:center;">
       <button id="test-btn" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;margin-right:8px">Start MultiplyBTC</button>
       <button id="AUTO-PLAY-BTN" style="font-size:12px;background-color:#015958;padding:6px 16px; border:0px;border-radius:7px;"></button>
+    </div>
+    <div style="padding:12px;display:flex;flex-wrap:nowrap;font-size:12px;">
+      <div style="display:flex;align-items:center;width:50%;">
+        <div style="margin-right:4px">Odds</div>
+        <input style="margin:0px" id="PLAY-RATIO" value="10.00" type="number" />
+      </div>
+      <div style="display:flex;align-items:center;width:50%;padding-left:4px">
+        <div style="margin-right:4px">Bet</div>
+        <input style="margin:0px" id="PLAY-STARTING-BET" value="1" type="number" />
+      </div>
     </div>
     <div style="padding:0px 12px;">
       <table style="width:100%;">
