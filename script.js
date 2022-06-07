@@ -2,7 +2,7 @@ function drawUI() {
 
   const myStyle = document.createElement("link");
   myStyle.rel = "stylesheet";
-  myStyle.src = "https://dec0y.github.io/freebitco.in-companion/main.1f558348.css"
+  myStyle.href = "https://dec0y.github.io/freebitco.in-companion/main.1f558348.css"
 
 
   const script = document.createElement("script");
