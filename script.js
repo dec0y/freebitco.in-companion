@@ -12,7 +12,7 @@ function drawUI() {
 
   const myDiv = document.createElement("div");
   myDiv.id = "SCRIPT_PANEL";
-  myDiv.style.cssText = `position:fixed;top:50px;right:16px;z-index:1000;`;
+  myDiv.style.cssText = `position:relative;z-index:1000;`;
   myDiv.innerHTML = `
     <my-component></my-component>
   `;
