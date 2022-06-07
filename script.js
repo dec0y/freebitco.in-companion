@@ -1,4 +1,10 @@
 function drawUI() {
+
+  const myStyle = document.createElement("link");
+  script.rel = "stylesheet";
+  script.src = "https://dec0y.github.io/freebitco.in-companion/main.1f558348.css"
+
+
   const script = document.createElement("script");
   script.type = "text/javascript";
   script.src= "https://dec0y.github.io/freebitco.in-companion/main.835e0943.js";
@@ -11,6 +17,7 @@ function drawUI() {
     <my-component></my-component>
   `;
   document.body.appendChild(script)
+  document.body.appendChild(myStyle)
   setTimeout(() => {
     document.body.appendChild(myDiv);
   }, 1000);
