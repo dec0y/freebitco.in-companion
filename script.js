@@ -7,7 +7,7 @@ function drawUI() {
 
   const script = document.createElement("script");
   script.type = "text/javascript";
-  script.src= "https://dec0y.github.io/freebitco.in-companion/main.835e0943.js";
+  script.src= "https://dec0y.github.io/freebitco.in-companion/main.d214d9d3.js";
 
 
   const myDiv = document.createElement("div");
