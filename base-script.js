@@ -104,9 +104,9 @@ function drawUI() {
         document.getElementById("game-loss-p").innerText = perct.loss + '%';
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
-        document.getElementById("btc-won").innerText = winBTC.toFixed(8);
+        document.getElementById("btc-won").innerText = parseFloat(winBTC).toFixed(8);
         document.getElementById("btc-lost").innerText = lostBTC.toFixed(8);
-        document.getElementById("btc-profit").innerText = (winBTC - lostBTC).toFixed(8);
+        document.getElementById("btc-profit").innerText = (parseFloat(winBTC) - parseFloat(lostBTC)).toFixed(8);
       }
 
       function loopGame() {
