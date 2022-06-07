@@ -1,13 +1,13 @@
 function drawUI() {
 
-  const myStyle = document.createElement("link");
+  /* const myStyle = document.createElement("link");
   myStyle.rel = "stylesheet";
-  myStyle.href = "https://dec0y.github.io/freebitco.in-companion/main.1f558348.css"
+  myStyle.href = "https://dec0y.github.io/freebitco.in-companion/main.1f558348.css" */
 
 
   const script = document.createElement("script");
   script.type = "text/javascript";
-  script.src= "https://dec0y.github.io/freebitco.in-companion/main.d214d9d3.js";
+  script.src= "https://dec0y.github.io/freebitco.in-companion/main.a255ce22.js";
 
 
   const myDiv = document.createElement("div");
@@ -17,7 +17,7 @@ function drawUI() {
     <my-component></my-component>
   `;
   document.body.appendChild(script)
-  document.body.appendChild(myStyle)
+  // document.body.appendChild(myStyle)
   setTimeout(() => {
     document.body.appendChild(myDiv);
   }, 1000);
