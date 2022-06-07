@@ -10,8 +10,8 @@ function drawUI() {
       let balance = getBalance();
       let wins = 0;
       let loss = 0;
-      let winBTC = 0.00000000;
-      let lostBTC = 0.00000000;
+      let winBTC = parseFloat('0.00000000');
+      let lostBTC = parseFloat('0.00000000');
       let totalBet = 0;
 
       let storedObj = JSON.parse(localStorage.getItem("AUTOPLAY-OBJ"));
@@ -51,33 +51,33 @@ function drawUI() {
 
       function checkGame() {
         const result = {
-          won: document.getElementById("double_your_btc_bet_win").style.display !== "none",
-          lost: document.getElementById("double_your_btc_bet_lose").style.display !== "none",
+          won: document.getElementById("double_your_btc_bet_win").style.display === "block",
+          lost: document.getElementById("double_your_btc_bet_lose").style.display === "block",
         };
 
         if(!result.won && !result.lost) {
-          setTimeout(() => { checkGame(); }, 50);
+          setTimeout(() => { checkGame(); }, 250);
           return;
         } else {
           if (result.won) {
             wins++;
-            winBTC += parseFloat(document.getElementsByClassName('double_your_btc_bet_win_message')[0].innerText.replace('You BET HI so you win ', '').replace(' BTC!', ''));
+            winBTC += parseFloat(document.getElementById('double_your_btc_bet_win').innerText.replace('You BET HI so you win ', '').replace(' BTC!', ''));
             const startingBetAmount = (parseInt(document.getElementById("PLAY-STARTING-BET").value) / 100000000).toFixed(8);
             currentBetAmount = parseFloat(startingBetAmount).toFixed(8);
             setBetAmount(startingBetAmount);
           } else {
             loss++;
-            lostBTC += parseFloat(document.getElementsByClassName('double_your_btc_bet_lose_message')[0].innerText.replace('You BET HI so you lose ', '').replace(' BTC', ''));
+            lostBTC += parseFloat(document.getElementById('double_your_btc_bet_lose').innerText.replace('You BET HI so you lose ', '').replace(' BTC', ''));
             currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(storedObj.incrementAmount)).toFixed(8);
             setBetAmount(currentBetAmount);
           }
           updateText();
           setTimeout(() => {
+            document.getElementById("double_your_btc_bet_win").style.display = 'none';
+            document.getElementById("double_your_btc_bet_lose").style.display = 'none';
+            document.getElementsByClassName('top-bar-section')[0].style.display = 'block';
             loopGame();
           }, 500);
-          document.getElementById("double_your_btc_bet_win").style.display = 'none';
-          document.getElementById("double_your_btc_bet_lose").style.display = 'none';
-          document.getElementsByClassName('top-bar-section')[0].style.display = 'block';
         }
 
         
@@ -105,7 +105,7 @@ function drawUI() {
         document.getElementById("game-loss").innerText = loss;
         document.getElementById("game-total").innerText = wins + loss;
         document.getElementById("btc-won").innerText = parseFloat(winBTC).toFixed(8);
-        document.getElementById("btc-lost").innerText = lostBTC.toFixed(8);
+        document.getElementById("btc-lost").innerText = parseFloat(lostBTC).toFixed(8);
         document.getElementById("btc-profit").innerText = (parseFloat(winBTC) - parseFloat(lostBTC)).toFixed(8);
       }
 
