@@ -147,7 +147,11 @@ function drawUI() {
           } else {
             loss++;
             lostBTC += parseFloat(currentBetAmount);
-            currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(incrementAmount)).toFixed(8);
+            if (parseFloat(currentBetAmount) >= 0.00000020) {
+              currentBetAmount = parseFloat(startingBetAmount).toFixed(8);
+            } else {
+              currentBetAmount = (parseFloat(currentBetAmount) + parseFloat(incrementAmount)).toFixed(8);
+            }
             setBetAmount(currentBetAmount);
           }
           updateText();
@@ -303,7 +307,7 @@ function drawUI() {
       }
 
     }); 
-  `
+  `;
 
   const myStyle = document.createElement("style");
   myStyle.innerHTML = `
@@ -311,7 +315,7 @@ function drawUI() {
     .MY-PANEL-ACTIVE { opacity: 1 !important; }
     .MY-PANEL-SETTINGS { display:none; }
     .MY-PANEL-SETTINGS.ACTIVE { display: flex; }
-  `
+  `;
 
   const myDiv = document.createElement("div");
   myDiv.id = "SCRIPT_PANEL";
@@ -410,9 +414,7 @@ function drawUI() {
   document.body.appendChild(myStyle);
   document.body.appendChild(myDiv);
   setTimeout(() => {
-    document.body.appendChild(script)
+    document.body.appendChild(script);
   }, 500);
 }
 drawUI();
-
-
