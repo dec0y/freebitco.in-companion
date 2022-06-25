@@ -46,7 +46,12 @@ function drawUI() {
       }
 
       function playGame()  {
-        document.getElementById("double_your_btc_bet_hi_button").click();
+        const a = Math.floor(Math.random() * 1000);
+        if (a > 499) {
+          document.getElementById("double_your_btc_bet_hi_button").click();
+        } else {
+          document.getElementById("double_your_btc_bet_lo_button").click();
+        }
       }
 
       function checkGame() {
@@ -409,6 +414,7 @@ function drawUI() {
 
       
     </div>
+    <div>v0.0.1</div>
     </div>
   `;
   document.body.appendChild(myStyle);
