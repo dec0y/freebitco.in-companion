@@ -257,7 +257,7 @@ function drawUI() {
         const timing = Math.floor(Math.random() * 10) * 1000;
         console.log("Rolling in " + timing / 1000 + "s");
         
-         if (document.getElementById("#checkbox")) {
+         if (document.querySelector("#checkbox")) {
           document.querySelector('#checkbox').click()
           let bContinue = false
           setTimeout(function () {
