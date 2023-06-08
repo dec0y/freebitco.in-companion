@@ -266,7 +266,11 @@ function drawUI() {
         console.log("Rolling in " + timing / 1000 + "s");
         
          if (document.querySelector("#checkbox")) {
-          console.log('captcha')
+          
+         }
+         
+         console.log(document.querySelector("#checkbox"))
+         console.log('captcha')
           document.querySelector('#checkbox').click()
           let bContinue = await waitToSee()
           console.log('done waiting')
@@ -274,7 +278,6 @@ function drawUI() {
            window.alert('Captcha')
            return;
           }
-         }
         
         setTimeout(function () {
           var button = document.getElementById("free_play_form_button");
