@@ -251,21 +251,24 @@ function drawUI() {
         }
       );
 
+      async function waitToSee() {
+        setTimeout(function () {
+            if (document.querySelector('.check').style.display !== 'none') {
+              return true
+            }
+            return false
+          }, 10000);
+      }
       
-      function clickRoll() {
+      async function clickRoll() {
         window.scrollTo({ top: 1000, behavior: 'smooth' });
         const timing = Math.floor(Math.random() * 10) * 1000;
         console.log("Rolling in " + timing / 1000 + "s");
         
          if (document.querySelector("#checkbox")) {
           document.querySelector('#checkbox').click()
-          let bContinue = false
-          setTimeout(function () {
-            if (document.querySelector('.check').style.display !== 'none') {
-              bContinue = true
-            }
-          }, 10000);
-          
+          let bContinue = await waitToSee()
+
           if (!bContinue) {
            window.alert('Captcha')
            return;
