@@ -256,6 +256,22 @@ function drawUI() {
         window.scrollTo({ top: 1000, behavior: 'smooth' });
         const timing = Math.floor(Math.random() * 10) * 1000;
         console.log("Rolling in " + timing / 1000 + "s");
+        
+         if (document.getElementById("#checkbox")) {
+          document.getElementById("#checkbox").click();
+          let bContinue = false
+          setTimeout(function () {
+            if (document.querySelector('.check').style.display !== 'none') {
+              bContinue = true
+            }
+          }, 10000);
+          
+          if (!bContinue) {
+           window.alert('Captcha')
+           return;
+          }
+         }
+        
         setTimeout(function () {
           var button = document.getElementById("free_play_form_button");
           if (button.style.display !== 'none') {
