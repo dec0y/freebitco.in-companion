@@ -266,9 +266,10 @@ function drawUI() {
         console.log("Rolling in " + timing / 1000 + "s");
         
          if (document.querySelector("#checkbox")) {
+          console.log('captcha')
           document.querySelector('#checkbox').click()
           let bContinue = await waitToSee()
-
+          console.log('done waiting')
           if (!bContinue) {
            window.alert('Captcha')
            return;
